@@ -87,6 +87,20 @@
       </form>
     </div>
   </div>
+  
+  
+    <div class="text-center">
+      <form action="EnviarCorreo" method="post">
+      <label class="form-label">Destinatario:</label> 
+        <input type="text" name="destinatario" class="form-control" required>
+        <label class="form-label">Asunto:</label> 
+        <input type="text" name="asunto" class="form-control" required>
+        <label class="form-label">Texto:</label> 
+        <input type="text" name="cuerpo" class="form-control" required>
+        <button type="submit" class="btn btn-secondary"> Enviar correo</button>
+      </form>
+    </div>
+ 
 
   <!-- Bootstrap 5 JS Bundle -->
   <script

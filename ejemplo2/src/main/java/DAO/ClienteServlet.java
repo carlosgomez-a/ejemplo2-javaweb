@@ -47,6 +47,8 @@ public class ClienteServlet extends HttpServlet {
 		out.println("<h1> Servle </h1>");
 		out.println("</body>");
 		out.println("</html>");
+		
+		
 
 	
 	}

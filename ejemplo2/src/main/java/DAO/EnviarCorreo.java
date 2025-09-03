@@ -18,7 +18,7 @@ public class EnviarCorreo extends HttpServlet {
 
     // Configuración del correo remitente
     private final String remitente = "caligomez294@gmail.com";
-    private final String clave = ""; // contraseña de aplicación
+    private final String clave = "cqec dtwz unny xiia"; // contraseña de aplicación
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class EnviarCorreo extends HttpServlet {
         // Recibir datos desde el formulario
         String destinatario = request.getParameter("destinatario");
         String asunto = request.getParameter("asunto");
-        String mensaje = request.getParameter("mensaje");
+        String cuerpo = request.getParameter("cuerpo");
 
         // Configuración de propiedades SMTP
         Properties props = new Properties();
@@ -48,7 +48,7 @@ public class EnviarCorreo extends HttpServlet {
             msg.setFrom(new InternetAddress(remitente));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             msg.setSubject(asunto);
-            msg.setText(mensaje);
+            msg.setText(cuerpo);
 
             // Enviar el correo
             Transport.send(msg);
