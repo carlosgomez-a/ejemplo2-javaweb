@@ -26,7 +26,8 @@ public class DeleteCliente extends HttpServlet {
 	    }
 
 	    try {
-	        int cedula = Integer.parseInt(cedulaParam);  // 
+	        int cedula = Integer.parseInt(cedulaParam);  
+	         
 	        try (Connection conn = Conexion.getConnection();
 	             PreparedStatement stmt = conn.prepareStatement("DELETE FROM tblclientes WHERE cedula = ?")) {
 

@@ -32,7 +32,7 @@ public class ReportePDF extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //  descarga automática del documento PDF
+        //  prepara la descarga del documento PDF
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=reporte_clientes.pdf");
 
@@ -44,14 +44,12 @@ public class ReportePDF extends HttpServlet {
             }
 
             //Crear el documento PDF
-            Document document = new Document();
-            PdfWriter.getInstance(document, response.getOutputStream());
-            document.open();
+            Document document = new Document(); //lo conecta al OutputStream de la respuesta y todo lo que se agregue al
+            PdfWriter.getInstance(document, response.getOutputStream()); //se va enviando al navegador.
+            document.open(); //inicia la escritura.
 
-            //Encabezado del PDF
-            //Agrega párrafos de texto al PDF.
-            //Aquí escribes un título y la fecha actual.
-            document.add(new Paragraph("📋 Lista de Clientes"));
+           
+            document.add(new Paragraph(" Lista de Clientes")); 
             document.add(new Paragraph("Fecha de generación: " + new java.util.Date()));
             document.add(new Paragraph(" "));
 
@@ -71,7 +69,7 @@ public class ReportePDF extends HttpServlet {
                 table.addCell("Dirección");
                 table.addCell("Telefono");
 
-                // Llena la tabla con la con los datos de la bd
+                // Llena la tabla con  los datos de la bd
                 while (rs.next()) {
                     table.addCell(String.valueOf(rs.getInt("cedula")));
                     table.addCell(rs.getString("nombres"));

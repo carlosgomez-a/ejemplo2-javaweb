@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import Controlador.Conexion;
 
@@ -23,45 +25,76 @@ public class UpdateCliente extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
 
-        // Obtener parámetros del formulario
-        String cedula = request.getParameter("cedula");
-        String nombres = request.getParameter("nombres");
-        String apellidos = request.getParameter("apellidos");
-        String direccion = request.getParameter("direccion");
-        String telefono = request.getParameter("telefono");
+        String action = request.getParameter("action");
 
-        if (cedula == null || cedula.isEmpty()) {
-            out.println("Cédula no proporcionada.");
-            return;
-        }
+        if ("buscarRegistro".equals(action)) {
+            // Buscar cliente por cédula y reenviar al JSP
+            String cedula = request.getParameter("cedula");
 
-        try (Connection conn = Conexion.getConnection()) {
-            // Consulta SQL: NO actualizamos la cédula, solo usamos en WHERE
-            String sql = "UPDATE tblclientes SET nombres=?, apellidos=?, direccion=?, telefono=? WHERE cedula=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            try (Connection dbConnection = Conexion.getConnection()) {
+                String sql = "SELECT * FROM tblclientes WHERE cedula=?";
+                PreparedStatement ps = dbConnection.prepareStatement(sql);
+                ps.setString(1, cedula);
+                ResultSet rs = ps.executeQuery();
 
-            ps.setString(1, nombres);
-            ps.setString(2, apellidos);
-            ps.setString(3, direccion);
-            ps.setString(4, telefono);
-            ps.setString(5, cedula);
+                if (rs.next()) {
+                    request.setAttribute("cedula", rs.getString("cedula"));
+                    request.setAttribute("nombres", rs.getString("nombres"));
+                    request.setAttribute("apellidos", rs.getString("apellidos"));
+                    request.setAttribute("direccion", rs.getString("direccion"));
+                    request.setAttribute("telefono", rs.getString("telefono"));
+                }
 
-            int filas = ps.executeUpdate();
+                rs.close();
+                ps.close();
 
-            if (filas > 0) {
-                response.sendRedirect("index.jsp"); // Redirige a la lista de clientes
-            } else {
-                out.println("No se encontró ningún cliente con esa cédula.");
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            out.println("Error al actualizar cliente: " + e.getMessage());
+            // Cargar el formulario de actualización
+            request.getRequestDispatcher("UpdateCliente.jsp").forward(request, response);
+
+        } else if ("actualizarRegistro".equals(action)) {
+            // Procesar actualización
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+
+            String cedula = request.getParameter("cedula");
+            String nombres = request.getParameter("nombres");
+            String apellidos = request.getParameter("apellidos");
+            String direccion = request.getParameter("direccion");
+            String telefono = request.getParameter("telefono");
+
+            if (cedula == null || cedula.isEmpty()) {
+                out.println("Cédula no proporcionada.");
+                return;
+            }
+
+            try (Connection conn = Conexion.getConnection()) {
+                String sql = "UPDATE tblclientes SET nombres=?, apellidos=?, direccion=?, telefono=? WHERE cedula=?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                ps.setString(1, nombres);
+                ps.setString(2, apellidos);
+                ps.setString(3, direccion);
+                ps.setString(4, telefono);
+                ps.setString(5, cedula);
+
+                int filas = ps.executeUpdate();
+
+                if (filas > 0) {
+                    response.sendRedirect("index.jsp"); // Redirige a lista principal
+                } else {
+                    out.println("No se encontró ningún cliente con esa cédula.");
+                }
+
+                ps.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                out.println("Error al actualizar cliente: " + e.getMessage());
+            }
         }
     }
 }
