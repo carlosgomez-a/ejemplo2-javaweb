@@ -1,36 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Consulta de Cliente</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Consultar Cliente</title>
+
+<!-- Bootstrap 5 CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 <body class="bg-light">
 
-<div class="container mt-5">
-    <div class="card shadow-sm rounded">
-        <div class="card-header bg-info text-white">
-            <h4 class="mb-0">Consultar de Cliente</h4>
-        </div>
-        <div class="card-body">
-            <c:if test="${not empty mensaje}">
-                <div class="alert alert-warning">${mensaje}</div>
-            </c:if>
+	<div class="container py-5">
+		<h1 class="mb-4 text-center">Consultar Cliente</h1>
 
-            <table class="table table-bordered">
-                <tr><th>Cédula</th><td>${cedula}</td></tr>
-                <tr><th>Nombres</th><td>${nombres}</td></tr>
-                <tr><th>Apellidos</th><td>${apellidos}</td></tr>
-                <tr><th>Dirección</th><td>${direccion}</td></tr>
-                <tr><th>Teléfono</th><td>${telefono}</td></tr>
-            </table>
+		<!-- Formulario de Consulta -->
+		<form action="ConsultarCliente" method="get"
+			class="p-4 bg-white rounded shadow-sm">
 
-            <a href="index.jsp" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
-</div>
+			<div class="mb-3">
+				<label for="cedula" class="form-label">Cédula del Cliente:</label> <input
+					type="number" id="cedula" name="cedula" class="form-control"
+					required>
+			</div>
 
+			<button type="submit" class="btn btn-info">Consultar</button>
+		</form>
+
+		<!-- Mostrar resultado de la consulta -->
+		<%
+            String nombres = (String) request.getAttribute("nombres");
+            String apellidos = (String) request.getAttribute("apellidos");
+            String direccion = (String) request.getAttribute("direccion");
+            String telefono = (String) request.getAttribute("telefono");
+
+            if (nombres != null) {
+        %>
+		<div class="mt-4 p-4 bg-light border rounded">
+			<h5>Resultado de la consulta:</h5>
+			<p>
+				<strong>Nombres:</strong>
+				<%= nombres %></p>
+			<p>
+				<strong>Apellidos:</strong>
+				<%= apellidos %></p>
+			<p>
+				<strong>Dirección:</strong>
+				<%= direccion %></p>
+			<p>
+				<strong>Teléfono:</strong>
+				<%= telefono %></p>
+		</div>
+		<% 
+            } else if (request.getAttribute("error") != null) { 
+        %>
+		<div class="alert alert-danger mt-4">
+			<%= request.getAttribute("error") %>
+		</div>
+		<% } %>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

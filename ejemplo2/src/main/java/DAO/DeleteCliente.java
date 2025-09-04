@@ -16,36 +16,38 @@ public class DeleteCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
+			throws ServletException, IOException {
 
-	    String cedulaParam = request.getParameter("cedula");
+		String cedulaParam = request.getParameter("cedula");
 
-	    if (cedulaParam == null || cedulaParam.isEmpty()) {
-	        response.getWriter().println("Código de cliente no proporcionado.");
-	        return;
-	    }
+		if (cedulaParam == null || cedulaParam.isEmpty()) {
+			response.getWriter().println("Código de cliente no proporcionado.");
+			return;
+		}
 
-	    try {
-	        int cedula = Integer.parseInt(cedulaParam);  
-	         
-	        try (Connection conn = Conexion.getConnection();
-	             PreparedStatement stmt = conn.prepareStatement("DELETE FROM tblclientes WHERE cedula = ?")) {
+		try {
+			int cedula = Integer.parseInt(cedulaParam);
 
-	            stmt.setInt(1, cedula);
-	            int filas = stmt.executeUpdate();
+			try (Connection conn = Conexion.getConnection();
+					PreparedStatement stmt = conn.prepareStatement("DELETE FROM tblclientes WHERE cedula = ?")) {
 
-	            if (filas > 0) {
-	                response.sendRedirect("index.jsp");
-	            } else {
-	                response.getWriter().println("No se encontró ningún cliente con ese código.");
-	            }
-	        }
+				stmt.setInt(1, cedula);
+				int filas = stmt.executeUpdate();
 
-	    } catch (NumberFormatException e) {
-	        response.getWriter().println("Formato de cédula inválido.");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        response.getWriter().println("Error al eliminar el cliente.");
-	    }
+				if (filas > 0) {
+					response.sendRedirect("index.jsp");
+				} else {
+					response.getWriter().println("No se encontró ningún cliente con ese código.");
+				}
+			}
+
+		} catch (NumberFormatException e) {
+			response.getWriter().println("Formato de cédula inválido.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().println("Error al eliminar el cliente.");
+		}
 	}
 }
+
+

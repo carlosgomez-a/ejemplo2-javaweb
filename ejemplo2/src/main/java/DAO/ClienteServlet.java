@@ -34,7 +34,7 @@ public class ClienteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-	response.setContentType("text/html");
+		response.setContentType("text/html");
 
 		PrintWriter out = response.getWriter();
 
@@ -47,10 +47,7 @@ public class ClienteServlet extends HttpServlet {
 		out.println("<h1> Servle </h1>");
 		out.println("</body>");
 		out.println("</html>");
-		
-		
 
-	
 	}
 
 	/**
@@ -59,22 +56,22 @@ public class ClienteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		//parametros 
+
+		// parametros
 		String cedula = request.getParameter("cedula");
 		String nombres = request.getParameter("nombres");
 		String apellidos = request.getParameter("apellidos");
 		String direccion = request.getParameter("direccion");
 		String telefono = request.getParameter("telefono");
 
-		//conexion a la bd
+		// conexion a la bd
 		try (Connection con = Conexion.getConnection()) {
 
 			String sql = "INSERT INTO tblclientes (cedula, nombres, apellidos, direccion, telefono) VALUES (?,?,?,?,?)";
 
 			PreparedStatement ps = con.prepareStatement(sql);
 
-			//asignamos los valores 
+			// asignamos los valores
 			ps.setString(1, cedula);
 			ps.setString(2, nombres);
 			ps.setString(3, apellidos);
@@ -89,7 +86,6 @@ public class ClienteServlet extends HttpServlet {
 		}
 
 		doGet(request, response);
-
 
 	}
 

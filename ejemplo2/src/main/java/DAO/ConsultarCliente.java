@@ -14,11 +14,11 @@ import java.sql.SQLException;
 
 import Controlador.Conexion;
 
-@WebServlet("/UpdateCliente")
-public class UpdateCliente extends HttpServlet {
+@WebServlet("/ConsultarCliente")
+public class ConsultarCliente extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public UpdateCliente() {
+    public ConsultarCliente() {
         super();
     }
 

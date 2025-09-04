@@ -5,27 +5,54 @@
 <head>
 <meta charset="UTF-8">
 <title>Email</title>
+
+<!-- Bootstrap 5 CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
-<body>
-	<form action="EnviarCorreo" method=post>
-		<h1 class="mb-4 text-center">enviar correo</h1>
+<body class="bg-light">
 
-		<div class="mb-3">
-			<label class="form-label">Correo destinario:</label> <input
-				type="text" name="destinatario" class="form-control" required>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card shadow-lg rounded-3">
+					<div class="card-body p-4">
+						<h2 class="text-center mb-4">Enviar correo</h2>
+
+						<form action="EnviarCorreo" method="post">
+							<div class="mb-3">
+								<label class="form-label">Correo destinatario:</label> <input
+									type="email" name="destinatario" class="form-control"
+									placeholder="ejemplo@correo.com" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Asunto:</label> <input type="text"
+									name="asunto" class="form-control"
+									placeholder="Asunto del correo" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Mensaje:</label>
+								<textarea name="mensaje" class="form-control" rows="4"
+									placeholder="Escribe tu mensaje aquí..." required></textarea>
+							</div>
+
+							<button type="submit" class="btn btn-primary w-100">Enviar</button>
+						</form>
+
+						<div class="text-center mt-3">
+							<a href="index.jsp" class="btn btn-link">Volver</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
 
-		<div class="mb-3">
-			<label class="form-label">Asunto:</label> <input type="text"
-				name="apellidos" class="form-control" required>
-		</div>
-
-		<div class="mb-3">
-			<label class="form-label">Mensaje:</label> <input type="text"
-				name="direccion" class="form-control" required>
-		</div>
-		
-	</form>
-
+	<!-- Bootstrap 5 JS (opcional para interactividad) -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
