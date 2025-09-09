@@ -123,9 +123,11 @@
       class="btn btn-warning">Actualizar</button>
 
     <!-- Botón consultar -->
-    <a href="ConsultarCliente.jsp" class="btn btn-primary">Consultar Cliente</a>
+    
   </div>
 </form>
+
+
 
 
 		<!-- Boton para Generar Reporte PDF -->
@@ -135,6 +137,8 @@
 				
 					<div class="text-center mt-3">
 				<a href="EnviarCorreo.jsp" class="btn btn-info">Enviar Email</a>
+				
+				<a href="ConsultarCliente.jsp" class="btn btn-primary">Consultar Cliente</a>
 			</div>
 			</form>
 		

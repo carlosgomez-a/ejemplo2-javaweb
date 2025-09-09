@@ -6,11 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import Controlador.Conexion;
 
@@ -23,78 +21,36 @@ public class ConsultarCliente extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        String cedula = request.getParameter("cedula");
 
-        if ("buscarRegistro".equals(action)) {
-            // Buscar cliente por cédula y reenviar al JSP
-            String cedula = request.getParameter("cedula");
+        try (Connection conn = Conexion.getConnection()) {
+            String sql = "SELECT * FROM tblclientes WHERE cedula=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, cedula);
+            ResultSet rs = ps.executeQuery();
 
-            try (Connection dbConnection = Conexion.getConnection()) {
-                String sql = "SELECT * FROM tblclientes WHERE cedula=?";
-                PreparedStatement ps = dbConnection.prepareStatement(sql);
-                ps.setString(1, cedula);
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    request.setAttribute("cedula", rs.getString("cedula"));
-                    request.setAttribute("nombres", rs.getString("nombres"));
-                    request.setAttribute("apellidos", rs.getString("apellidos"));
-                    request.setAttribute("direccion", rs.getString("direccion"));
-                    request.setAttribute("telefono", rs.getString("telefono"));
-                }
-
-                rs.close();
-                ps.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (rs.next()) {
+                request.setAttribute("cedula", rs.getString("cedula"));
+                request.setAttribute("nombres", rs.getString("nombres"));
+                request.setAttribute("apellidos", rs.getString("apellidos"));
+                request.setAttribute("direccion", rs.getString("direccion"));
+                request.setAttribute("telefono", rs.getString("telefono"));
+            } else {
+                request.setAttribute("mensaje", "No se encontró un cliente con la cédula: " + cedula);
             }
 
-            // Cargar el formulario de actualización
-            request.getRequestDispatcher("UpdateCliente.jsp").forward(request, response);
+            rs.close();
+            ps.close();
 
-        } else if ("actualizarRegistro".equals(action)) {
-            // Procesar actualización
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-
-            String cedula = request.getParameter("cedula");
-            String nombres = request.getParameter("nombres");
-            String apellidos = request.getParameter("apellidos");
-            String direccion = request.getParameter("direccion");
-            String telefono = request.getParameter("telefono");
-
-            if (cedula == null || cedula.isEmpty()) {
-                out.println("Cédula no proporcionada.");
-                return;
-            }
-
-            try (Connection conn = Conexion.getConnection()) {
-                String sql = "UPDATE tblclientes SET nombres=?, apellidos=?, direccion=?, telefono=? WHERE cedula=?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-
-                ps.setString(1, nombres);
-                ps.setString(2, apellidos);
-                ps.setString(3, direccion);
-                ps.setString(4, telefono);
-                ps.setString(5, cedula);
-
-                int filas = ps.executeUpdate();
-
-                if (filas > 0) {
-                    response.sendRedirect("index.jsp"); // Redirige a lista principal
-                } else {
-                    out.println("No se encontró ningún cliente con esa cédula.");
-                }
-
-                ps.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                out.println("Error al actualizar cliente: " + e.getMessage());
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("mensaje", "Error al consultar cliente: " + e.getMessage());
         }
+
+        // Ir a la vista de consulta
+        request.getRequestDispatcher("ConsultarCliente.jsp").forward(request, response);
     }
 }

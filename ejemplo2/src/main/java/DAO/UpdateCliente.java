@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 import Controlador.Conexion;
 
+import 	DAO.Notificaicones;
+
 @WebServlet("/UpdateCliente")
 public class UpdateCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -83,6 +85,13 @@ public class UpdateCliente extends HttpServlet {
 				ps.setString(5, cedula);
 
 				int filas = ps.executeUpdate();
+
+			
+				Notificaicones noti = new Notificaicones();
+				
+				noti.SIM("Actualizacion de registro ", "se actualizo el registro del usuario con cedula: " + cedula );
+				
+
 
 				if (filas > 0) {
 					response.sendRedirect("index.jsp"); // Redirige a lista principal

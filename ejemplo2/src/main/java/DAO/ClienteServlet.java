@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import Controlador.Conexion;
-
+import DAO.Notificaicones;
 /**
  * Servlet implementation class RegistrarCliente
  */
@@ -78,6 +78,11 @@ public class ClienteServlet extends HttpServlet {
 			ps.setString(4, direccion);
 			ps.setString(5, telefono);
 			ps.executeUpdate();
+			
+
+	Notificaicones not = new Notificaicones();
+			
+			not.SIM("Registro de cliente ", "se registró un nuevo usuario con cedula : " + cedula );
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,6 +90,7 @@ public class ClienteServlet extends HttpServlet {
 
 		}
 
+		
 		doGet(request, response);
 
 	}

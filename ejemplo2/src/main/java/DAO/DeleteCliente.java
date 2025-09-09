@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import DAO.Notificaicones;
+
 import Controlador.Conexion;
 
 @WebServlet("/DeleteCliente")
 public class DeleteCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 {
 
 		String cedulaParam = request.getParameter("cedula");
 
@@ -40,6 +42,11 @@ public class DeleteCliente extends HttpServlet {
 					response.getWriter().println("No se encontró ningún cliente con ese código.");
 				}
 			}
+			
+			Notificaicones envio = new Notificaicones();
+			
+			envio.SIM("Eliminación de registro ", "se eliminó el registro del usuario con cedula: " + cedula );
+		
 
 		} catch (NumberFormatException e) {
 			response.getWriter().println("Formato de cédula inválido.");
@@ -50,4 +57,4 @@ public class DeleteCliente extends HttpServlet {
 	}
 }
 
-
+}
