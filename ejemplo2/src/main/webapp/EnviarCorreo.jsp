@@ -40,7 +40,7 @@
 									placeholder="Escribe tu mensaje aquí..." required></textarea>
 							</div>
 
-							<!-- Botón enviar -->			
+							<!--  Botón enviar -->			
 							<button type="submit" class="btn btn-primary w-100">Enviar</button>
 						</form>
 

@@ -31,7 +31,7 @@ public class Notificaicones {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
-		// Crear sesión autenticada con credenciales
+		// Crear sesión autenticada con  credenciales
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(remitente, clave);

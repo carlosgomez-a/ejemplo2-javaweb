@@ -33,7 +33,7 @@ public class ConsultarCliente extends HttpServlet {
 			ps.setString(1, cedula);
 			ResultSet rs = ps.executeQuery();
 
-			// Si encuentra un cliente, carga los datos en atributos para mostrarlos en JSP
+			// Si encuentra un cliente,  carga los datos en atributos para mostrarlos en JSP
 			if (rs.next()) {
 				request.setAttribute("cedula", rs.getString("cedula"));
 				request.setAttribute("nombres", rs.getString("nombres"));

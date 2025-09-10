@@ -59,7 +59,7 @@
 							value="${telefono}">
 					</div>
 
-						<!-- Botones: volver al inicio o guardar cambios -->
+						<!-- Botones: volver al  inicio o guardar cambios -->
 					<div class="d-flex justify-content-between">
 						<a href="index.jsp" class="btn btn-secondary">Volver</a>
 						<button type="submit" class="btn btn-success">Guardar Cambios</button>

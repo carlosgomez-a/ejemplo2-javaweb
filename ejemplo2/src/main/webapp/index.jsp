@@ -158,7 +158,7 @@ form:hover {
 		</form>
 
 
-		<!-- Boton para Generar Reporte PDF, enviar email y consultar clientes-->
+		<!-- Boton para  Generar Reporte PDF, enviar email y consultar clientes-->
 		<div class="text-center">
 			<form action="ReportePDF" method="get">
 				<button type="submit" class="btn btn-secondary">Generar Reporte PDF</button>

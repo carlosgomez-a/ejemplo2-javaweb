@@ -77,7 +77,7 @@ public class ClienteServlet extends HttpServlet {
 		String direccion = request.getParameter("direccion");
 		String telefono = request.getParameter("telefono");
 
-		// 2. Conexión a la BD e inserción de datos
+		// 2. Conexión a la BD e  inserción de datos
 		try (Connection con = Conexion.getConnection()) {
 
 			String sql = "INSERT INTO tblclientes (cedula, nombres, apellidos, direccion, telefono) VALUES (?,?,?,?,?)";

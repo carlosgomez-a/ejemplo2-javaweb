@@ -101,7 +101,7 @@ public class EnviarCorreo extends HttpServlet {
 			out.println("</body></html>");
 
 		} 
-		 //  Si ocurre un error al enviar (ejemplo: credenciales incorrectas)
+		 //  Si ocurre un error  al enviar (ejemplo: credenciales incorrectas)
 	    //    se captura la excepción y se informa al usuario en el navegador.
 		catch (MessagingException e) {
 			

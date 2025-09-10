@@ -9,7 +9,7 @@
 <!-- Página JSP para consultar clientes en la base de datos -->
 <!-- Muestra un formulario para ingresar la cédula del cliente y busca sus datos -->
 
-<!-- Librería Bootstrap 5 para estilos y diseño responsive -->
+<!-- Librería Bootstrap 5 para estilos  y diseño responsive -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">

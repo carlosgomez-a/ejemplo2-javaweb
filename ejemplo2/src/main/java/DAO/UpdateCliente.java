@@ -36,7 +36,7 @@ public class UpdateCliente extends HttpServlet {
 			// Buscar cliente por cédula y reenviar al JSP
 			String cedula = request.getParameter("cedula");
 			
-			// Busca el cliente en la base de datos por cédula
+			// Busca el  cliente en la base de datos por cédula
 
 			try (Connection dbConnection = Conexion.getConnection()) {
 				String sql = "SELECT * FROM tblclientes WHERE cedula=?";
