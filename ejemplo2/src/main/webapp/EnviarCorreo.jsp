@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Email</title>
 
-<!-- Bootstrap 5 CSS -->
+<!-- Bootstrap 5 CSS: estilos modernos y adaptables -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -20,6 +20,7 @@
 					<div class="card-body p-4">
 						<h2 class="text-center mb-4">Enviar correo</h2>
 
+						<!--Campos requeridos para poder enviar el correo al destinatario final  -->
 						<form action="EnviarCorreo" method="post">
 							<div class="mb-3">
 								<label class="form-label">Correo destinatario:</label> <input
@@ -39,11 +40,13 @@
 									placeholder="Escribe tu mensaje aquí..." required></textarea>
 							</div>
 
+							<!-- Botón enviar -->			
 							<button type="submit" class="btn btn-primary w-100">Enviar</button>
 						</form>
 
+							<!-- Botón volver al inicio -->	
 						<div class="text-center mt-3">
-							<a href="index.jsp" class="btn btn-link">Volver</a>
+							<a href="index.jsp" class="btn btn-secondary w-100">Volver</a>
 						</div>
 					</div>
 				</div>

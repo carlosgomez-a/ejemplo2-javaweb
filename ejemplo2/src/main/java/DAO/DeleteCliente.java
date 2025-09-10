@@ -16,45 +16,45 @@ import Controlador.Conexion;
 @WebServlet("/DeleteCliente")
 public class DeleteCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 {
 
-		String cedulaParam = request.getParameter("cedula");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		{
 
-		if (cedulaParam == null || cedulaParam.isEmpty()) {
-			response.getWriter().println("Código de cliente no proporcionado.");
-			return;
-		}
+			String cedulaParam = request.getParameter("cedula");
 
-		try {
-			int cedula = Integer.parseInt(cedulaParam);
-
-			try (Connection conn = Conexion.getConnection();
-					PreparedStatement stmt = conn.prepareStatement("DELETE FROM tblclientes WHERE cedula = ?")) {
-
-				stmt.setInt(1, cedula);
-				int filas = stmt.executeUpdate();
-
-				if (filas > 0) {
-					response.sendRedirect("index.jsp");
-				} else {
-					response.getWriter().println("No se encontró ningún cliente con ese código.");
-				}
+			if (cedulaParam == null || cedulaParam.isEmpty()) {
+				response.getWriter().println("Código de cliente no proporcionado.");
+				return;
 			}
-			
-			Notificaicones envio = new Notificaicones();
-			
-			envio.SIM("Eliminación de registro ", "se eliminó el registro del usuario con cedula: " + cedula );
-		
 
-		} catch (NumberFormatException e) {
-			response.getWriter().println("Formato de cédula inválido.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().println("Error al eliminar el cliente.");
+			try {
+				int cedula = Integer.parseInt(cedulaParam);
+
+				try (Connection conn = Conexion.getConnection();
+						PreparedStatement stmt = conn.prepareStatement("DELETE FROM tblclientes WHERE cedula = ?")) {
+
+					stmt.setInt(1, cedula);
+					int filas = stmt.executeUpdate();
+
+					if (filas > 0) {
+						response.sendRedirect("index.jsp");
+					} else {
+						response.getWriter().println("No se encontró ningún cliente con ese código.");
+					}
+				}
+
+				Notificaicones envio = new Notificaicones();
+
+				envio.SIM("Eliminación de registro ", "se eliminó el registro del usuario con cedula: " + cedula);
+
+			} catch (NumberFormatException e) {
+				response.getWriter().println("Formato de cédula inválido.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().println("Error al eliminar el cliente.");
+			}
 		}
 	}
-}
 
 }

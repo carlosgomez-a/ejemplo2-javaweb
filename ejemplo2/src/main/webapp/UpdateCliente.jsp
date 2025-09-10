@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Actualizar Cliente</title>
-<!-- Bootstrap 5 CDN -->
+
+<!-- Bootstrap 5 para estilos y diseño responsivo -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -19,23 +20,26 @@
 			</div>
 			<div class="card-body">
 
-				<!-- Formulario de actualización -->
+					<!-- Formulario para actualizar los datos de un cliente -->
 				<form action="UpdateCliente" method="post" class="p-3">
 
 					<input type="hidden" name="action" value="actualizarRegistro">
 
-					<!-- Cedula (readonly para no modificar) -->
+					<!-- Campo oculto: indica la acción que se ejecutará en el servlet -->
 					<div class="mb-3">
 						<label for="cedula" class="form-label">Cédula:</label> <input
 							type="text" class="form-control" id="cedula" name="cedula"
 							value="${cedula}" readonly>
 					</div>
 
+					<!-- Campos editables: nombres, apellidos, dirección, teléfono -->
 					<div class="mb-3">
 						<label for="nombres" class="form-label">Nombres:</label> <input
 							type="text" class="form-control" id="nombres" name="nombres"
 							value="${nombres}" required>
 					</div>
+					
+					
 
 					<div class="mb-3">
 						<label for="apellidos" class="form-label">Apellidos:</label> <input
@@ -55,11 +59,10 @@
 							value="${telefono}">
 					</div>
 
-					<!-- Botones -->
+						<!-- Botones: volver al inicio o guardar cambios -->
 					<div class="d-flex justify-content-between">
 						<a href="index.jsp" class="btn btn-secondary">Volver</a>
-						<button type="submit" class="btn btn-success">Guardar
-							Cambios</button>
+						<button type="submit" class="btn btn-success">Guardar Cambios</button>
 					</div>
 
 				</form>

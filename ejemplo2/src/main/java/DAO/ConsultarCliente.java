@@ -14,43 +14,47 @@ import Controlador.Conexion;
 
 @WebServlet("/ConsultarCliente")
 public class ConsultarCliente extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ConsultarCliente() {
-        super();
-    }
+	public ConsultarCliente() {
+		super();
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Obtener la cédula ingresada en el formulario
+		String cedula = request.getParameter("cedula");
 
-        String cedula = request.getParameter("cedula");
+		try (Connection conn = Conexion.getConnection()) {
+			// Consulta SQL para buscar cliente por cédula
+			String sql = "SELECT * FROM tblclientes WHERE cedula=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, cedula);
+			ResultSet rs = ps.executeQuery();
 
-        try (Connection conn = Conexion.getConnection()) {
-            String sql = "SELECT * FROM tblclientes WHERE cedula=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, cedula);
-            ResultSet rs = ps.executeQuery();
+			// Si encuentra un cliente, carga los datos en atributos para mostrarlos en JSP
+			if (rs.next()) {
+				request.setAttribute("cedula", rs.getString("cedula"));
+				request.setAttribute("nombres", rs.getString("nombres"));
+				request.setAttribute("apellidos", rs.getString("apellidos"));
+				request.setAttribute("direccion", rs.getString("direccion"));
+				request.setAttribute("telefono", rs.getString("telefono"));
+			} else {
+				// Mensaje si no se encuentra cliente con esa cédula
+				request.setAttribute("mensaje", "No se encontró un cliente con la cédula: " + cedula);
+			}
+			// Cerrar recursos
+			rs.close();
+			ps.close();
 
-            if (rs.next()) {
-                request.setAttribute("cedula", rs.getString("cedula"));
-                request.setAttribute("nombres", rs.getString("nombres"));
-                request.setAttribute("apellidos", rs.getString("apellidos"));
-                request.setAttribute("direccion", rs.getString("direccion"));
-                request.setAttribute("telefono", rs.getString("telefono"));
-            } else {
-                request.setAttribute("mensaje", "No se encontró un cliente con la cédula: " + cedula);
-            }
+		} catch (Exception e) {
+			// Manejo de errores en la consulta
+			e.printStackTrace();
+			request.setAttribute("mensaje", "Error al consultar cliente: " + e.getMessage());
+		}
 
-            rs.close();
-            ps.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("mensaje", "Error al consultar cliente: " + e.getMessage());
-        }
-
-        // Ir a la vista de consulta
-        request.getRequestDispatcher("ConsultarCliente.jsp").forward(request, response);
-    }
+		// Ir a la vista de consulta
+		request.getRequestDispatcher("ConsultarCliente.jsp").forward(request, response);
+	}
 }
